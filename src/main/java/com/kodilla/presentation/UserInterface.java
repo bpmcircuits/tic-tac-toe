@@ -128,6 +128,9 @@ public class UserInterface {
         boolean finishedGame = false;
         while (!finishedGame) {
             System.out.printf(UIStrings.PLAYER_TURN, playerOne.isPlayerTurn() ? playerOneName : playerTwoName);
+
+            System.out.println(board);
+
             String place = "";
             boolean validPlace = false;
             while (!validPlace) {
@@ -146,13 +149,11 @@ public class UserInterface {
             if (PossibleMove.checkPossibleMove(board, place)) {
                 System.out.println("Empty space, possible move!");
                 board.setFigure(PossibleMove.findPoint(place), playerOne.isPlayerTurn() ? playerOne.getPlayerFigure() : playerTwo.getPlayerFigure());
+                playerOne.setPlayerTurn(playerTwo.isPlayerTurn());
+                playerTwo.setPlayerTurn(!playerOne.isPlayerTurn());
             }
             else System.out.println("Occupied place!");
 
-            System.out.println(board);
-
-            playerOne.setPlayerTurn(playerTwo.isPlayerTurn());
-            playerTwo.setPlayerTurn(!playerOne.isPlayerTurn());
         }
     }
 
