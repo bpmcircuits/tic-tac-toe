@@ -1,107 +1,86 @@
 package com.kodilla.presentation;
 
-import com.kodilla.figures.Cross;
-import com.kodilla.figures.Nought;
-import com.kodilla.logic.Board;
 import com.kodilla.logic.Player;
 import com.kodilla.logic.MoveChecker;
+import com.kodilla.logic.Settings;
 
 import java.util.Scanner;
 
 public class UserInterface {
 
-    private Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
 
-    public void run() {
+    public static int mainMenuChoice() {
         int menuChoice = -1;
-        while (menuChoice != 4) {
-
-            System.out.println(UIStrings.MAIN_MENU);
-
-            System.out.print(UIStrings.OPTION);
-            String input = scanner.nextLine().trim();
-
-            try {
-                menuChoice = Integer.parseInt(input);
-                if (menuChoice < 1 || menuChoice > 5) {
-                    System.out.println(UIStrings.CHOOSE_RIGHT_OPTION_ONE_FIVE);
-                    continue;
-                }
-
-                switch (menuChoice) {
-                    case 1 -> newGameMenu();
-                    case 2 -> showStatistics();
-                    case 3 -> showAbout();
-                    case 4 -> {
-                        boolean validOption = false;
-                        while (!validOption) {
-                            System.out.print(UIStrings.ON_QUIT);
-                            String userExitQ = scanner.nextLine().trim();
-                            if (!userExitQ.equals("yes") && !userExitQ.equals("no")) {
-                                System.out.println(UIStrings.WRONG_OPTION);
-                                continue;
-                            }
-                            if (userExitQ.equals("no")) menuChoice = -1;
-                            validOption = true;
-                        }
-                    }
-                }
-
-            } catch (NumberFormatException e) {
+        System.out.println(UIStrings.MAIN_MENU);
+        System.out.print(UIStrings.OPTION);
+        String input = scanner.nextLine().trim();
+        try {
+            menuChoice = Integer.parseInt(input);
+            if (menuChoice < 1 || menuChoice > 5) {
                 System.out.println(UIStrings.CHOOSE_RIGHT_OPTION_ONE_FIVE);
             }
+        } catch (NumberFormatException e) {
+            System.out.println(UIStrings.CHOOSE_RIGHT_OPTION_ONE_FIVE);
         }
+        return menuChoice;
     }
 
-    private void showStatistics() {
+    public static boolean onExit() {
+        boolean validOption = false;
+        while (!validOption) {
+            System.out.print(UIStrings.ON_QUIT);
+            String userExitQ = scanner.nextLine().trim();
+            if (!userExitQ.equals("yes") && !userExitQ.equals("no")) {
+                System.out.println(UIStrings.WRONG_OPTION);
+                continue;
+            }
+            if (userExitQ.equals("no")) return false;
+            validOption = true;
+        }
+        return true;
+    }
+
+
+    public static void showStatistics() {
         System.out.println("Statistics: to be added...");
         System.out.println(UIStrings.PRESS_ENTER);
         scanner.nextLine();
     }
 
-    private void showAbout() {
-        System.out.println("About: blablabla");
+    public static void showAbout() {
+        System.out.println("About: tic tac toe");
         System.out.println(UIStrings.PRESS_ENTER);
         scanner.nextLine();
     }
 
-    private void newGameMenu() {
+    public static int newGameMenu() {
 
         int menuChoice = -1;
-        while (menuChoice != 3) {
-
-            System.out.println(UIStrings.NEW_GAME_MENU);
-
-            System.out.print(UIStrings.OPTION);
-            String input = scanner.nextLine().trim();
-
-            try {
-                menuChoice = Integer.parseInt(input);
-                if (menuChoice < 1 || menuChoice > 3) {
-                    System.out.println(UIStrings.CHOOSE_RIGHT_OPTION_ONE_THREE);
-                    continue;
-                }
-
-                switch (menuChoice) {
-                    case 1 -> renderPlayerVsPlayer();
-                    case 2 -> renderPlayerVsComputer();
-                }
-
-            } catch (NumberFormatException e) {
+        System.out.println(UIStrings.NEW_GAME_MENU);
+        System.out.print(UIStrings.OPTION);
+        String input = scanner.nextLine().trim();
+        try {
+            menuChoice = Integer.parseInt(input);
+            if (menuChoice < 1 || menuChoice > 3) {
                 System.out.println(UIStrings.CHOOSE_RIGHT_OPTION_ONE_THREE);
             }
+        } catch (NumberFormatException e) {
+            System.out.println(UIStrings.CHOOSE_RIGHT_OPTION_ONE_THREE);
         }
+        return menuChoice;
     }
 
-    private void renderPlayerVsPlayer() {
+    public static String getPlayerName(Settings.PLAYER player) {
+        System.out.println(player == Settings.PLAYER.FIRST ? UIStrings.PLAYER_ONE_NAME : UIStrings.PLAYER_TWO_NAME);
+        return scanner.nextLine().trim();
+    }
 
-        System.out.println(UIStrings.PLAYER_ONE_NAME);
-        String playerOneName = scanner.nextLine().trim();
+    public static String getFigure() {
         String figure = "";
 
         boolean validFigure = false;
         while (!validFigure) {
-
             System.out.println(UIStrings.CHOOSE_FIGURE);
             figure = scanner.nextLine().trim();
 
@@ -111,57 +90,60 @@ public class UserInterface {
                 System.out.println(UIStrings.WRONG_OPTION);
             }
         }
+        return figure;
+    }
 
-        Player playerOne = new Player(playerOneName, figure.equals("X") ? new Cross() : new Nought());
+    public static void displayPlayers(Player one, Player two) {
+        System.out.printf(UIStrings.PLAYER_VS_PLAYER, one.username(), two.username());
+    }
 
-        System.out.println(UIStrings.PLAYER_TWO_NAME);
-        String playerTwoName = scanner.nextLine().trim();
-
-        Player playerTwo = new Player(playerTwoName, figure.equals("X") ? new Nought() : new Cross());
-
-        System.out.printf(UIStrings.PLAYER_VS_PLAYER, playerOneName, playerTwoName);
-
-        Board board = new Board();
-
-        board.init();
-        System.out.println(board);
-        playerOne.setPlayerTurn(true);
-        boolean finishedGame = false;
-        while (!finishedGame) {
-            System.out.printf(UIStrings.PLAYER_TURN, playerOne.isPlayerTurn() ? playerOneName : playerTwoName);
-
-            String place = "";
-            boolean validPlace = false;
-            while (!validPlace) {
-                System.out.print(UIStrings.PLACE_YOUR_MARK);
-                place = scanner.nextLine().trim();
-                if (place.equals("quit")) {
-                    finishedGame = true;
-                    break;
+    public static int getBoardSize() {
+        int boardSize = 3;
+        boolean validBoardSize = false;
+        while (!validBoardSize) {
+            System.out.println(UIStrings.BOARD_SIZE);
+            System.out.print(UIStrings.OPTION);
+            String input = scanner.nextLine().trim();
+            try {
+                boardSize = Integer.parseInt(input);
+                if (boardSize < Settings.MIN_BOARD_SIZE || boardSize > Settings.MAX_BOARD_SIZE) {
+                    continue;
                 }
-                else if (MoveChecker.checkStringPositionName(place)) validPlace = true;
-                else System.out.println(UIStrings.WRONG_PLACE);
+                validBoardSize = true;
+            } catch (NumberFormatException e) {
+                System.out.println(UIStrings.WRONG_OPTION);
             }
-
-            if (finishedGame) break;
-
-            if (MoveChecker.checkPossibleMove(board, place)) {
-                board.setFigure(MoveChecker.findPoint(place), playerOne.isPlayerTurn() ? playerOne.getPlayerFigure() : playerTwo.getPlayerFigure());
-            }
-            else System.out.println(UIStrings.OCCUPIED_PLACE);
-
-            if (MoveChecker.checkWin(board, playerOne.isPlayerTurn() ? playerOne : playerTwo)) {
-                System.out.printf(UIStrings.WINNER, playerOne.isPlayerWin() ? playerOneName : playerTwoName);
-                finishedGame = true;
-            } else {
-                playerOne.setPlayerTurn(playerTwo.isPlayerTurn());
-                playerTwo.setPlayerTurn(!playerOne.isPlayerTurn());
-            }
-
-            System.out.println(board);
         }
+
+        return boardSize;
     }
 
-    private void renderPlayerVsComputer() {
+    public static void showWhichPlayerTurn(String playerName) {
+        System.out.printf(UIStrings.PLAYER_TURN, playerName);
     }
+
+    public static String getFigurePosition(int boardSize) {
+        String position = "";
+        boolean validPlace = false;
+        while (!validPlace) {
+            System.out.print(UIStrings.PLACE_YOUR_MARK);
+            position = scanner.nextLine().trim();
+            if (MoveChecker.checkStringPositionName(position, boardSize)) validPlace = true;
+            else System.out.println(UIStrings.WRONG_PLACE);
+        }
+        return position;
+    }
+
+    public static void showWinner(String playerName) {
+        System.out.printf(UIStrings.WINNER, playerName);
+    }
+
+    public static void showDraw() {
+        System.out.println(UIStrings.DRAW);
+    }
+
+    public static void wrongPlace() {
+        System.out.println(UIStrings.WRONG_PLACE);
+    }
+
 }

@@ -8,10 +8,12 @@ import java.util.List;
 
 public class BoardRow {
 
+    private final int size;
     private List<Figure> cols = new ArrayList<>();
 
-    public BoardRow() {
-        for (int col = 0; col < 3; col++) {
+    public BoardRow(int size) {
+        this.size = size;
+        for (int col = 0; col < size; col++) {
             cols.add(new None());
         }
     }
@@ -22,12 +24,10 @@ public class BoardRow {
 
     public String toString(int rowNumber) {
         String s = rowNumber + " |";
-        for (int col = 0; col < 3; col++) {
+        for (int col = 0; col < size; col++) {
             s += cols.get(col) + "|";
         }
         s += "\n";
         return s;
     }
-
-
 }
