@@ -146,13 +146,12 @@ public class UserInterface {
             if (finishedGame) break;
 
             if (MoveChecker.checkPossibleMove(board, place)) {
-                System.out.println("Empty space, possible move!");
                 board.setFigure(MoveChecker.findPoint(place), playerOne.isPlayerTurn() ? playerOne.getPlayerFigure() : playerTwo.getPlayerFigure());
             }
-            else System.out.println("Occupied place!");
+            else System.out.println(UIStrings.OCCUPIED_PLACE);
 
             if (MoveChecker.checkWin(board, playerOne.isPlayerTurn() ? playerOne : playerTwo)) {
-                System.out.printf("Player %s won!%n", playerOne.isPlayerWin() ? playerOneName : playerTwoName);
+                System.out.printf(UIStrings.WINNER, playerOne.isPlayerWin() ? playerOneName : playerTwoName);
                 finishedGame = true;
             } else {
                 playerOne.setPlayerTurn(playerTwo.isPlayerTurn());

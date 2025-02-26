@@ -29,8 +29,9 @@ public class UIStrings {
     public static String CHOOSE_FIGURE = "Please choose a figure between X and O";
     public static String PLAYER_VS_PLAYER = "%s vs %s \n";
 
-    public static String PLAYER_TURN = "%s turn \n";
+    public static String PLAYER_TURN = "%s's turn \n";
     public static String PLACE_YOUR_MARK = "Place your mark: ";
     public static String WRONG_PLACE = "Wrong place!";
-
+    public static String OCCUPIED_PLACE = "This place is already occupied!";
+    public static String WINNER = "Player %s won!%n";
 }

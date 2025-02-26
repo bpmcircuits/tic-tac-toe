@@ -1,9 +1,7 @@
 package com.kodilla.logic;
 
-import com.kodilla.figures.Cross;
 import com.kodilla.figures.Figure;
 import com.kodilla.figures.None;
-import com.kodilla.figures.Nought;
 
 import java.awt.*;
 import java.util.Objects;
