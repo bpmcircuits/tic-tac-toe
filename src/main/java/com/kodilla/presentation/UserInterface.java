@@ -4,7 +4,7 @@ import com.kodilla.figures.Cross;
 import com.kodilla.figures.Nought;
 import com.kodilla.logic.Board;
 import com.kodilla.logic.Player;
-import com.kodilla.logic.PossibleMove;
+import com.kodilla.logic.MoveChecker;
 
 import java.util.Scanner;
 
@@ -124,12 +124,11 @@ public class UserInterface {
         Board board = new Board();
 
         board.init();
+        System.out.println(board);
         playerOne.setPlayerTurn(true);
         boolean finishedGame = false;
         while (!finishedGame) {
             System.out.printf(UIStrings.PLAYER_TURN, playerOne.isPlayerTurn() ? playerOneName : playerTwoName);
-
-            System.out.println(board);
 
             String place = "";
             boolean validPlace = false;
@@ -140,20 +139,27 @@ public class UserInterface {
                     finishedGame = true;
                     break;
                 }
-                else if (PossibleMove.checkStringPositionName(place)) validPlace = true;
+                else if (MoveChecker.checkStringPositionName(place)) validPlace = true;
                 else System.out.println(UIStrings.WRONG_PLACE);
             }
 
             if (finishedGame) break;
 
-            if (PossibleMove.checkPossibleMove(board, place)) {
+            if (MoveChecker.checkPossibleMove(board, place)) {
                 System.out.println("Empty space, possible move!");
-                board.setFigure(PossibleMove.findPoint(place), playerOne.isPlayerTurn() ? playerOne.getPlayerFigure() : playerTwo.getPlayerFigure());
-                playerOne.setPlayerTurn(playerTwo.isPlayerTurn());
-                playerTwo.setPlayerTurn(!playerOne.isPlayerTurn());
+                board.setFigure(MoveChecker.findPoint(place), playerOne.isPlayerTurn() ? playerOne.getPlayerFigure() : playerTwo.getPlayerFigure());
             }
             else System.out.println("Occupied place!");
 
+            if (MoveChecker.checkWin(board, playerOne.isPlayerTurn() ? playerOne : playerTwo)) {
+                System.out.printf("Player %s won!%n", playerOne.isPlayerWin() ? playerOneName : playerTwoName);
+                finishedGame = true;
+            } else {
+                playerOne.setPlayerTurn(playerTwo.isPlayerTurn());
+                playerTwo.setPlayerTurn(!playerOne.isPlayerTurn());
+            }
+
+            System.out.println(board);
         }
     }
 

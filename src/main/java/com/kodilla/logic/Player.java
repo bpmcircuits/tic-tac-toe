@@ -7,6 +7,7 @@ public class Player {
     private final String username;
     private final Figure playerFigure;
     private boolean isPlayerTurn = false;
+    private boolean playerWin = false;
 
     public Player(String username, Figure playerFigure) {
         this.username = username;
@@ -27,5 +28,13 @@ public class Player {
 
     public void setPlayerTurn(boolean playerTurn) {
         isPlayerTurn = playerTurn;
+    }
+
+    public boolean isPlayerWin() {
+        return playerWin;
+    }
+
+    public void setPlayerWin(boolean playerWin) {
+        this.playerWin = playerWin;
     }
 }
