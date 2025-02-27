@@ -15,7 +15,7 @@ public class Board {
     private List<BoardRow> rows = new ArrayList<>();
     private Figure currentPlayer;
     private Figure winner;
-    private int winLength = Settings.MAX_WIN_LENGTH;
+    private int winLength = Settings.getMaxWinLength();
 
     public Board(int size, Figure playerFigure) {
         if (size <= winLength) winLength = size;

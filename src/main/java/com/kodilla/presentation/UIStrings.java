@@ -17,7 +17,7 @@ public class UIStrings {
                                         3. Back
                                         """;
 
-    public static String BOARD_SIZE = "Please provide a board size between " + Settings.MIN_BOARD_SIZE + " and " + Settings.MAX_BOARD_SIZE;
+    public static String BOARD_SIZE = "Please provide a board size between " + Settings.getMinBoardSize() + " and " + Settings.getMaxBoardSize();
 
     public static String OPTION = "Option: ";
     public static String ON_QUIT = " Are you sure? \n"

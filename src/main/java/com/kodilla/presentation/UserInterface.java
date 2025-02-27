@@ -106,7 +106,7 @@ public class UserInterface {
             String input = scanner.nextLine().trim();
             try {
                 boardSize = Integer.parseInt(input);
-                if (boardSize < Settings.MIN_BOARD_SIZE || boardSize > Settings.MAX_BOARD_SIZE) {
+                if (boardSize < Settings.getMinBoardSize() || boardSize > Settings.getMaxBoardSize()) {
                     continue;
                 }
                 validBoardSize = true;
