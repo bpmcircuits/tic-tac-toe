@@ -73,7 +73,7 @@ public class Board {
         else return null;
     }
 
-    private boolean checkRows() {
+    public boolean checkRows() {
         for (int i = 0; i < size; i++) {
             List<Figure> cols = rows.get(i).getCols();
             for (int j = 0; j <= size - winLength; j++) {
@@ -95,7 +95,7 @@ public class Board {
         return false;
     }
 
-    private boolean checkColumns() {
+    public boolean checkColumns() {
         for (int col = 0; col < size; col++) {
             for (int row = 0; row <= size - winLength; row++) {
                 Figure first = rows.get(row).getCols().get(col);
@@ -116,7 +116,7 @@ public class Board {
         return false;
     }
 
-    private boolean checkDiagonals() {
+    public boolean checkDiagonals() {
         for (int i = 0; i <= size - winLength; i++) {
             for (int j = 0; j <= size - winLength; j++) {
                 Figure first = rows.get(i).getCols().get(j);

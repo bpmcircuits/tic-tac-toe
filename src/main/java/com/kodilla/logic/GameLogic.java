@@ -34,7 +34,7 @@ public class GameLogic {
 
             switch (newGameMenuOption) {
                 case PLAYER_VS_PLAYER -> renderPlayerVsPlayer();
-                case PLAYER_VS_COMPUTER -> UserInterface.showStatistics();
+                case PLAYER_VS_COMPUTER -> renderPlayerVsComputer();
                 case BACK -> {
                     return;
                 }
@@ -51,7 +51,7 @@ public class GameLogic {
         String playerTwoName = UserInterface.getPlayerName(Settings.PLAYER.SECOND);
         Player playerTwo = new Player(playerTwoName, figure.equals("X") ? new Nought() : new Cross());
 
-        UserInterface.displayPlayers(playerOne, playerTwo);
+        UserInterface.displayPlayers(playerOne.username(), playerTwo.username());
 
         Board board = new Board(boardSize, playerOne.playerFigure());
 
@@ -86,5 +86,60 @@ public class GameLogic {
 
             System.out.println(board);
         }
+    }
+
+    public void renderPlayerVsComputer() {
+
+        int boardSize = UserInterface.getBoardSize();
+        String playerOneName = UserInterface.getPlayerName(Settings.PLAYER.FIRST);
+        String figure = UserInterface.getFigure();
+        Player playerOne = new Player(playerOneName, figure.equals("X") ? new Cross() : new Nought());
+
+        Computer computer = new Computer(figure.equals("X") ? new Nought() : new Cross(), boardSize);
+
+        UserInterface.displayPlayers(playerOne.username(), computer.getComputerName());
+
+        Board board = new Board(boardSize, playerOne.playerFigure());
+        board.init();
+
+        System.out.println(board);
+
+        boolean finishedGame = false;
+        while (!finishedGame) {
+
+            String position;
+
+            if (board.getCurrentPlayer().getClass() == playerOne.playerFigure().getClass()) {
+                UserInterface.showWhichPlayerTurn(playerOneName);
+                while (true) {
+                    position = UserInterface.getFigurePosition(board.getSize());
+                    if (!board.setFigure(MoveChecker.findPoint(position), playerOne.playerFigure())) {
+                        UserInterface.wrongPlace();
+                    } else {
+                        break;
+                    }
+                }
+
+            } else {
+                UserInterface.showWhichPlayerTurn(computer.getComputerName());
+                do {
+                    position = computer.generateComputerMove();
+                } while (!board.setFigure(MoveChecker.findPoint(position), computer.getComputerFigure()));
+            }
+
+            if (board.checkWinner() != null) {
+                finishedGame = true;
+                UserInterface.showWinner(board.getWinner() == playerOne.playerFigure() ? playerOneName : computer.getComputerName());
+            } else if (board.isBoardFull()) {
+                finishedGame = true;
+                UserInterface.showDraw();
+            } else {
+                board.nextTurn();
+            }
+
+            System.out.println(board);
+        }
+
+
     }
 }

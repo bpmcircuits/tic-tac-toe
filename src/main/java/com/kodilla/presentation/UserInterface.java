@@ -93,8 +93,8 @@ public class UserInterface {
         return figure;
     }
 
-    public static void displayPlayers(Player one, Player two) {
-        System.out.printf(UIStrings.PLAYER_VS_PLAYER, one.username(), two.username());
+    public static void displayPlayers(String playerOne, String playerTwo) {
+        System.out.printf(UIStrings.PLAYER_VS_PLAYER, playerOne, playerTwo);
     }
 
     public static int getBoardSize() {
