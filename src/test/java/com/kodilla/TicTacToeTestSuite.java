@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
-
 public class TicTacToeTestSuite {
 
     private Board board;
@@ -16,17 +14,17 @@ public class TicTacToeTestSuite {
     @BeforeEach
     public void setUp() {
         board = new Board(3, new Cross());
-        board.init();
+        board.initBoard();
     }
 
     @Test
     void testNoughtWinRows() {
         // Given
         for (int row = 0; row < 3; row++)
-            board.setFigure(new Point(row,0), new Nought());
+            board.setFigureToPosition(new Nought(), );
 
         // When
-        boolean actual = board.checkRows();
+        boolean actual = board.checkWinningRows();
 
         // Then
         assertTrue(actual);
@@ -36,10 +34,10 @@ public class TicTacToeTestSuite {
     void testNoughtWinCols() {
         // Given
         for (int col = 0; col < 3; col++)
-            board.setFigure(new Point(0, col), new Nought());
+            board.setFigureToPosition(new Nought(), );
 
         // When
-        boolean actual = board.checkColumns();
+        boolean actual = board.checkWinningColumns();
 
         // Then
         assertTrue(actual);
@@ -49,10 +47,10 @@ public class TicTacToeTestSuite {
     void testNoughtWinDiagonals() {
         // Given
         for (int colRow = 0; colRow < 3; colRow++)
-            board.setFigure(new Point(colRow, colRow), new Nought());
+            board.setFigureToPosition(new Nought(), );
 
         // When
-        boolean actual = board.checkDiagonals();
+        boolean actual = board.checkWinningDiagonals();
 
         // Then
         assertTrue(actual);
@@ -62,10 +60,10 @@ public class TicTacToeTestSuite {
     void testCrossWinRows() {
         // Given
         for (int row = 0; row < 3; row++)
-            board.setFigure(new Point(row, 0), new Cross());
+            board.setFigureToPosition(new Cross(), );
 
         // When
-        boolean actual = board.checkRows();
+        boolean actual = board.checkWinningRows();
 
         // Then
         assertTrue(actual);
@@ -75,10 +73,10 @@ public class TicTacToeTestSuite {
     void testCrossWinCols() {
         // Given
         for (int col = 0; col < 3; col++)
-            board.setFigure(new Point(0, col), new Cross());
+            board.setFigureToPosition(new Cross(), );
 
         // When
-        boolean actual = board.checkColumns();
+        boolean actual = board.checkWinningColumns();
 
         // Then
         assertTrue(actual);
@@ -88,10 +86,10 @@ public class TicTacToeTestSuite {
     void testCrossWinDiagonals() {
         // Given
         for (int colRow = 0; colRow < 3; colRow++)
-            board.setFigure(new Point(colRow, colRow), new Cross());
+            board.setFigureToPosition(new Cross(), );
 
         // When
-        boolean actual = board.checkDiagonals();
+        boolean actual = board.checkWinningDiagonals();
 
         // Then
         assertTrue(actual);
@@ -100,15 +98,15 @@ public class TicTacToeTestSuite {
     @Test
     void testDraw() {
         // Given
-        board.setFigure(new Point(0, 0), new Cross());
-        board.setFigure(new Point(0, 1), new Cross());
-        board.setFigure(new Point(0, 2), new Nought());
-        board.setFigure(new Point(1, 0), new Cross());
-        board.setFigure(new Point(1, 1), new Cross());
-        board.setFigure(new Point(1, 2), new Nought());
-        board.setFigure(new Point(2, 0), new Nought());
-        board.setFigure(new Point(2, 1), new Nought());
-        board.setFigure(new Point(2, 2), new Cross());
+        board.setFigureToPosition(new Cross(), );
+        board.setFigureToPosition(new Cross(), );
+        board.setFigureToPosition(new Nought(), );
+        board.setFigureToPosition(new Cross(), );
+        board.setFigureToPosition(new Cross(), );
+        board.setFigureToPosition(new Nought(), );
+        board.setFigureToPosition(new Nought(), );
+        board.setFigureToPosition(new Nought(), );
+        board.setFigureToPosition(new Cross(), );
 
         // When
         boolean actual = board.isBoardFull();
@@ -120,10 +118,10 @@ public class TicTacToeTestSuite {
     @Test
     void testWhenIllegalMove() {
         // Given
-        board.setFigure(new Point(0, 0), new Cross());
+        board.setFigureToPosition(new Cross(), );
 
         // When
-        boolean actual = board.setFigure(new Point(0, 0), new Nought());
+        boolean actual = board.setFigureToPosition(new Nought(), );
 
         // Then
         assertFalse(actual);

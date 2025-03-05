@@ -23,7 +23,7 @@ public class Board {
         currentPlayer = playerFigure;
     }
 
-    public void init() {
+    public void initBoard() {
         for (int row = 0; row < size; row++)
             rows.add(new BoardRow(size));
     }
@@ -32,18 +32,21 @@ public class Board {
         return size;
     }
 
-    public boolean setFigure(Point point, Figure figure) {
-        if (getFigure(point).getClass() == None.class) {
-            rows.get(point.y).getCols().set(point.x, figure);
-            return true;
-        } else return false;
+    public void setFigureToPosition(Figure figure, String position) {
+        Point point = MoveChecker.findPoint(position);
+        rows.get(point.y).getCols().set(point.x, figure);
     }
 
-    public Figure getFigure(Point point) {
+    public Figure getFigureFromPosition(String position) {
+        Point point = MoveChecker.findPoint(position);
         return rows.get(point.y).getCols().get(point.x);
     }
 
-    public void nextTurn() {
+    public boolean isPointOccupied(String position) {
+        return getFigureFromPosition(position).getClass() != None.class;
+    }
+
+    public void switchToNextTurn() {
         currentPlayer = (currentPlayer.getClass() == Cross.class) ? new Nought() : new Cross();
     }
 
@@ -67,13 +70,13 @@ public class Board {
     }
 
     public Figure checkWinner() {
-        if (checkRows()) return winner;
-        else if (checkColumns()) return winner;
-        else if (checkDiagonals()) return winner;
+        if (checkWinningRows()) return winner;
+        else if (checkWinningColumns()) return winner;
+        else if (checkWinningDiagonals()) return winner;
         else return null;
     }
 
-    public boolean checkRows() {
+    public boolean checkWinningRows() {
         for (int i = 0; i < size; i++) {
             List<Figure> cols = rows.get(i).getCols();
             for (int j = 0; j <= size - winLength; j++) {
@@ -95,7 +98,7 @@ public class Board {
         return false;
     }
 
-    public boolean checkColumns() {
+    public boolean checkWinningColumns() {
         for (int col = 0; col < size; col++) {
             for (int row = 0; row <= size - winLength; row++) {
                 Figure first = rows.get(row).getCols().get(col);
@@ -116,7 +119,7 @@ public class Board {
         return false;
     }
 
-    public boolean checkDiagonals() {
+    public boolean checkWinningDiagonals() {
         for (int i = 0; i <= size - winLength; i++) {
             for (int j = 0; j <= size - winLength; j++) {
                 Figure first = rows.get(i).getCols().get(j);
