@@ -32,18 +32,16 @@ public class Board {
         return size;
     }
 
-    public void setFigureToPosition(Figure figure, String position) {
-        Point point = MoveChecker.findPoint(position);
+    public void setFigureToPosition(Figure figure, Point point) {
         rows.get(point.y).getCols().set(point.x, figure);
     }
 
-    public Figure getFigureFromPosition(String position) {
-        Point point = MoveChecker.findPoint(position);
+    public Figure getFigureFromPosition(Point point) {
         return rows.get(point.y).getCols().get(point.x);
     }
 
-    public boolean isPointOccupied(String position) {
-        return getFigureFromPosition(position).getClass() != None.class;
+    public boolean isPointOccupied(Point point) {
+        return getFigureFromPosition(point).getClass() != None.class;
     }
 
     public void switchToNextTurn() {

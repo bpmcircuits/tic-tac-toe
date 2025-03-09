@@ -53,4 +53,9 @@ public class MenuEnum {
             return BY_VALUE.get(value);
         }
     }
+
+    public enum HumanOrComputerEnum {
+        HUMAN,
+        COMPUTER
+    }
 }

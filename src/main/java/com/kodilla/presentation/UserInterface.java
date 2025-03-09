@@ -1,9 +1,7 @@
 package com.kodilla.presentation;
-
-import com.kodilla.logic.Player;
-import com.kodilla.logic.MoveChecker;
 import com.kodilla.logic.Settings;
 
+import java.awt.*;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -82,7 +80,7 @@ public class UserInterface {
         boolean validFigure = false;
         while (!validFigure) {
             System.out.println(UIStrings.CHOOSE_FIGURE);
-            figure = scanner.nextLine().trim();
+            figure = scanner.nextLine().trim().toUpperCase();
 
             if (figure.equals("X") || figure.equals("O")) {
                 validFigure = true;
@@ -122,16 +120,18 @@ public class UserInterface {
         System.out.printf(UIStrings.PLAYER_TURN, playerName);
     }
 
-    public static String getFigurePosition(int boardSize) {
+    public static Point getFigurePosition(int boardSize) {
         String position = "";
         boolean validPlace = false;
         while (!validPlace) {
             System.out.print(UIStrings.PLACE_YOUR_MARK);
             position = scanner.nextLine().trim();
-            if (MoveChecker.checkStringPositionName(position, boardSize)) validPlace = true;
+            if (isCorrectPositionName(position, boardSize)) {
+                validPlace = true;
+            }
             else System.out.println(UIStrings.WRONG_PLACE);
         }
-        return position;
+        return findPoint(position);
     }
 
     public static void showWinner(String playerName) {
@@ -144,6 +144,30 @@ public class UserInterface {
 
     public static void wrongPlace() {
         System.out.println(UIStrings.WRONG_PLACE);
+    }
+
+    private static boolean isCorrectPositionName(String position, int boardSize) {
+        if (position == null || position.length() < 2) {
+            return false;
+        }
+        char colChar = position.charAt(0);
+        if (colChar < 'A' || colChar > ('A' + boardSize - 1)) {
+            return false;
+        }
+        String rowPart = position.substring(1);
+        try {
+            int row = Integer.parseInt(rowPart);
+            return row >= 1 && row <= boardSize;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private static Point findPoint(String position) {
+        char colChar = position.charAt(0);
+        int col = colChar - 'A';
+        int row = Integer.parseInt(position.substring(1)) - 1;
+        return new Point(col, row);
     }
 
 }

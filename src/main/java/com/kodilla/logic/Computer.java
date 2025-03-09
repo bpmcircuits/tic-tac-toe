@@ -2,6 +2,7 @@ package com.kodilla.logic;
 
 import com.kodilla.figures.Figure;
 
+import java.awt.*;
 import java.util.Random;
 
 public class Computer {
@@ -14,13 +15,13 @@ public class Computer {
         this.boardSize = boardSize;
     }
 
-    public String generateComputerMove() {
+    public Point generateComputerMove() {
         Random rand = new Random();
 
-        int randomLetter = rand.nextInt(boardSize);
-        int randomNumber = rand.nextInt(1, boardSize + 1);
+        int randomX = rand.nextInt(boardSize);
+        int randomY = rand.nextInt(boardSize);
 
-        return String.valueOf((char) ('A' + randomLetter)) + randomNumber;
+        return new Point(randomX, randomY);
     }
 
     public Figure getComputerFigure() {
