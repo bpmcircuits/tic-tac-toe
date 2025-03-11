@@ -69,12 +69,12 @@ public class UserInterface {
         return menuChoice;
     }
 
-    public static String getPlayerName(Settings.PLAYER player) {
+    public static String choosePlayerName(Settings.PLAYER player) {
         System.out.println(player == Settings.PLAYER.FIRST ? UIStrings.PLAYER_ONE_NAME : UIStrings.PLAYER_TWO_NAME);
         return scanner.nextLine().trim();
     }
 
-    public static String getFigure() {
+    public static String chooseFigure() {
         String figure = "";
 
         boolean validFigure = false;
@@ -95,7 +95,7 @@ public class UserInterface {
         System.out.printf(UIStrings.PLAYER_VS_PLAYER, playerOne, playerTwo);
     }
 
-    public static int getBoardSize() {
+    public static int chooseBoardSize() {
         int boardSize = 3;
         boolean validBoardSize = false;
         while (!validBoardSize) {

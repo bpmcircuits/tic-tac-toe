@@ -1,6 +1,7 @@
 package com.kodilla.logic;
 
 import com.kodilla.figures.Cross;
+import com.kodilla.figures.Figure;
 import com.kodilla.figures.Nought;
 import com.kodilla.presentation.MenuEnum;
 import com.kodilla.presentation.UserInterface;
@@ -46,19 +47,19 @@ public class GameLogic {
 
     private void renderGameWith(MenuEnum.HumanOrComputerEnum playerOfChoice) {
 
-        int boardSize = UserInterface.getBoardSize();
-        String playerOneName = UserInterface.getPlayerName(Settings.PLAYER.FIRST);
+        int boardSize = UserInterface.chooseBoardSize();
+        String playerOneName = UserInterface.choosePlayerName(Settings.PLAYER.FIRST);
         String playerTwoName;
-        String figure = UserInterface.getFigure();
-        Player playerOne = new Player(playerOneName, figure.equals("X") ? new Cross() : new Nought());
+        String figure = UserInterface.chooseFigure();
+        Player playerOne = new Player(playerOneName, getFigure(figure));
         Player playerTwo = null;
         Computer computer = null;
 
         if (playerOfChoice == MenuEnum.HumanOrComputerEnum.HUMAN) {
-            playerTwoName = UserInterface.getPlayerName(Settings.PLAYER.SECOND);
-            playerTwo = new Player(playerTwoName, figure.equals("X") ? new Nought() : new Cross());
+            playerTwoName = UserInterface.choosePlayerName(Settings.PLAYER.SECOND);
+            playerTwo = new Player(playerTwoName, getFigure(figure));
         } else {
-            computer = new Computer(figure.equals("X") ? new Nought() : new Cross(), boardSize);
+            computer = new Computer(getFigure(figure), boardSize);
             playerTwoName = computer.getComputerName();
         }
 
@@ -129,5 +130,9 @@ public class GameLogic {
 
     private boolean isCurrentPlayerWinner(Board board, Player player) {
         return board.getWinner() == player.playerFigure();
+    }
+
+    private Figure getFigure(String figure) {
+        return figure.equals("X") ? new Cross() : new Nought();
     }
 }
