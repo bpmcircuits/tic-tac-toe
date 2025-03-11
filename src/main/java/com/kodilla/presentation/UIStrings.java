@@ -7,9 +7,7 @@ public class UIStrings {
     public static String MAIN_MENU = """
                                     Main Menu: \s
                                     1. New Game \s
-                                    2. Show Statistics \s
-                                    3. About \s
-                                    4. Quit
+                                    2. Quit
                                     """;
     public static String NEW_GAME_MENU = """
                                         1. Player vs Player
@@ -22,7 +20,7 @@ public class UIStrings {
     public static String OPTION = "Option: ";
     public static String ON_QUIT = " Are you sure? \n"
                                     + "(type yes or no): ";
-    public static String CHOOSE_RIGHT_OPTION_ONE_FIVE = "Please choose the option between 1 and 4.";
+    public static String CHOOSE_RIGHT_OPTION_ONE_TWO = "Please choose the option between 1 and 2.";
     public static String CHOOSE_RIGHT_OPTION_ONE_THREE = "Please choose the option between 1 and 3.";
     public static String WRONG_OPTION = "Wrong option!";
     public static String PRESS_ENTER = "(press enter to go back)";

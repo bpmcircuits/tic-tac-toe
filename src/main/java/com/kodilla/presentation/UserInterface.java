@@ -15,11 +15,11 @@ public class UserInterface {
         String input = scanner.nextLine().trim();
         try {
             menuChoice = Integer.parseInt(input);
-            if (menuChoice < 1 || menuChoice > 5) {
-                System.out.println(UIStrings.CHOOSE_RIGHT_OPTION_ONE_FIVE);
+            if (menuChoice < 1 || menuChoice > 3) {
+                System.out.println(UIStrings.CHOOSE_RIGHT_OPTION_ONE_TWO);
             }
         } catch (NumberFormatException e) {
-            System.out.println(UIStrings.CHOOSE_RIGHT_OPTION_ONE_FIVE);
+            System.out.println(UIStrings.CHOOSE_RIGHT_OPTION_ONE_TWO);
         }
         return menuChoice;
     }
@@ -37,19 +37,6 @@ public class UserInterface {
             validOption = true;
         }
         return true;
-    }
-
-
-    public static void showStatistics() {
-        System.out.println("Statistics: to be added...");
-        System.out.println(UIStrings.PRESS_ENTER);
-        scanner.nextLine();
-    }
-
-    public static void showAbout() {
-        System.out.println("About: tic tac toe");
-        System.out.println(UIStrings.PRESS_ENTER);
-        scanner.nextLine();
     }
 
     public static int newGameMenu() {

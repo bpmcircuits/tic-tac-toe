@@ -7,9 +7,7 @@ public class MenuEnum {
 
     public enum MainMenuOption {
         NEW_GAME(1),
-        STATISTICS(2),
-        ABOUT(3),
-        EXIT(4);
+        EXIT(2);
 
         private static final Map<Integer, MainMenuOption> BY_VALUE = new HashMap<>();
 

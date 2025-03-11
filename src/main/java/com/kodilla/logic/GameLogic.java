@@ -19,8 +19,6 @@ public class GameLogic {
 
             switch (mainMenuOption) {
                 case NEW_GAME -> newGameMenu();
-                case STATISTICS -> UserInterface.showStatistics();
-                case ABOUT -> UserInterface.showAbout();
                 case EXIT -> {
                     if (UserInterface.onExit()) return;
                 }
