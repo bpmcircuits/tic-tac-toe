@@ -1,0 +1,15 @@
+/* style.css */
+.button {
+    -fx-font-weight: bold;
+    -fx-text-fill: darkblue;
+    -fx-font-size: 42px;
+    -fx-border-color: #575757;
+    -fx-border-width: 2;
+}
+
+.grid-pane {
+    -fx-alignment: center;
+    -fx-hgap: 5;
+    -fx-vgap: 5;
+    -fx-padding: 10;
+}
