@@ -156,6 +156,94 @@ public class Board {
         return false;
     }
 
+    public int countRowFiguresFromPosition(Figure target, Point point) {
+        int count = 0;
+        int col = point.x - 1; // liczenie w lewą stronę
+        while (col >= 0 && isTargetFigureRow(target, point, col)) {
+            count++;
+            col--;
+        }
+
+        col = point.x + 1; // liczenie w prawą stronę
+        while (col < size && isTargetFigureRow(target, point, col)) {
+            count++;
+            col++;
+        }
+        return count;
+    }
+
+    public int countColumnFiguresFromPosition(Figure target, Point point) {
+        int count = 0;
+        int row = point.y - 1; // liczenie w dół
+        while (row >= 0 && isTargetFigureColumn(target, point, row)) {
+            count++;
+            row--;
+        }
+
+        row = point.y + 1; // liczenie w górę
+        while (row < size && isTargetFigureColumn(target, point, row)) {
+            count++;
+            row++;
+        }
+        return count;
+    }
+
+    public int countDiagonalFiguresFromPosition(Figure target, Point point) {
+        int countMain = 0;
+
+        // liczenie w lewy dół
+        int row = point.y - 1;
+        int col = point.x - 1;
+        while (row >= 0 && col >= 0 && isTargetFigureDiagonal(target, row, col)) {
+            countMain++;
+            row--;
+            col--;
+        }
+
+        // liczenie w prawą górę
+        row = point.y + 1;
+        col = point.x + 1;
+        while (row < size && col < size && isTargetFigureDiagonal(target, row, col)) {
+            countMain++;
+            row++;
+            col++;
+        }
+
+        // liczenie w prawy dół
+        int countAnti = 0;
+        row = point.y - 1;
+        col = point.x + 1;
+        while (row >= 0 && col < size && isTargetFigureDiagonal(target, row, col)) {
+            countAnti++;
+            row--;
+            col++;
+        }
+
+        // liczenie w lewą górę
+        row = point.y + 1;
+        col = point.x - 1;
+        while (row < size && col >= 0 && isTargetFigureDiagonal(target, row, col)) {
+            countAnti++;
+            row++;
+            col--;
+        }
+
+        return Math.max(countMain, countAnti);
+    }
+
+    private boolean isTargetFigureRow(Figure target, Point point, int col) {
+        return rows.get(point.y).getCols().get(col).getClass() == target.getClass();
+    }
+
+    private boolean isTargetFigureColumn(Figure target, Point point, int row) {
+        return rows.get(row).getCols().get(point.x).getClass() == target.getClass();
+    }
+
+    private boolean isTargetFigureDiagonal(Figure target, int row, int col) {
+        return rows.get(row).getCols().get(col).getClass() == target.getClass();
+    }
+
+
     @Override
     public String toString() {
         String s = "   ";

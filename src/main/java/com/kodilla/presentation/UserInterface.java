@@ -11,15 +11,20 @@ public class UserInterface {
     public static int mainMenuChoice() {
         int menuChoice = -1;
         System.out.println(UIStrings.MAIN_MENU);
-        System.out.print(UIStrings.OPTION);
-        String input = scanner.nextLine().trim();
-        try {
-            menuChoice = Integer.parseInt(input);
-            if (menuChoice < 1 || menuChoice > 3) {
+        boolean validInput = false;
+        while (!validInput) {
+            try {
+                System.out.print(UIStrings.OPTION);
+                String input = scanner.nextLine().trim();
+                menuChoice = Integer.parseInt(input);
+                if (menuChoice < 1 || menuChoice > 2) {
+                    System.out.println(UIStrings.CHOOSE_RIGHT_OPTION_ONE_TWO);
+                    continue;
+                }
+                validInput = true;
+            } catch (NumberFormatException e) {
                 System.out.println(UIStrings.CHOOSE_RIGHT_OPTION_ONE_TWO);
             }
-        } catch (NumberFormatException e) {
-            System.out.println(UIStrings.CHOOSE_RIGHT_OPTION_ONE_TWO);
         }
         return menuChoice;
     }
@@ -43,15 +48,20 @@ public class UserInterface {
 
         int menuChoice = -1;
         System.out.println(UIStrings.NEW_GAME_MENU);
-        System.out.print(UIStrings.OPTION);
-        String input = scanner.nextLine().trim();
-        try {
-            menuChoice = Integer.parseInt(input);
-            if (menuChoice < 1 || menuChoice > 3) {
+        boolean validInput = false;
+        while (!validInput) {
+            try {
+                System.out.print(UIStrings.OPTION);
+                String input = scanner.nextLine().trim();
+                menuChoice = Integer.parseInt(input);
+                if (menuChoice < 1 || menuChoice > 3) {
+                    System.out.println(UIStrings.CHOOSE_RIGHT_OPTION_ONE_THREE);
+                    continue;
+                }
+                validInput = true;
+            } catch (NumberFormatException e) {
                 System.out.println(UIStrings.CHOOSE_RIGHT_OPTION_ONE_THREE);
             }
-        } catch (NumberFormatException e) {
-            System.out.println(UIStrings.CHOOSE_RIGHT_OPTION_ONE_THREE);
         }
         return menuChoice;
     }
@@ -101,6 +111,27 @@ public class UserInterface {
         }
 
         return boardSize;
+    }
+
+    public static MenuEnum.ComputerLevelEnum chooseComputerLevel() {
+        int levelChoice = -1;
+        boolean validComputerLevel = false;
+        while (!validComputerLevel) {
+            System.out.println(UIStrings.COMPUTER_LEVEL);
+            System.out.print(UIStrings.OPTION);
+            String input = scanner.nextLine().trim();
+            try {
+                levelChoice = Integer.parseInt(input);
+                if (levelChoice < 1 || levelChoice > 2) {
+                    System.out.println(UIStrings.CHOOSE_RIGHT_OPTION_ONE_TWO);
+                    continue;
+                }
+                validComputerLevel = true;
+            } catch (NumberFormatException e) {
+                System.out.println(UIStrings.WRONG_OPTION);
+            }
+        }
+        return levelChoice == 1 ? MenuEnum.ComputerLevelEnum.EASY : MenuEnum.ComputerLevelEnum.HARD;
     }
 
     public static void showWhichPlayerTurn(String playerName) {

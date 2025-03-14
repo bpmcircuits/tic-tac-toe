@@ -53,18 +53,19 @@ public class GameLogic {
         Player playerTwo = null;
         Computer computer = null;
 
+        Board board = new Board(boardSize, playerOne.playerFigure());
+        board.initBoard();
+
         if (playerOfChoice == MenuEnum.HumanOrComputerEnum.HUMAN) {
             playerTwoName = UserInterface.choosePlayerName(Settings.PLAYER.SECOND);
-            playerTwo = new Player(playerTwoName, getFigure(figure));
+            playerTwo = new Player(playerTwoName, getOpponentFigure(figure));
         } else {
-            computer = new Computer(getFigure(figure), boardSize);
+            MenuEnum.ComputerLevelEnum computerLevel = UserInterface.chooseComputerLevel();
+            computer = new Computer(board, getOpponentFigure(figure), boardSize, computerLevel);
             playerTwoName = computer.getComputerName();
         }
 
         UserInterface.displayPlayers(playerOneName, playerTwoName);
-
-        Board board = new Board(boardSize, playerOne.playerFigure());
-        board.initBoard();
 
         System.out.println(board);
 
@@ -101,10 +102,7 @@ public class GameLogic {
                     }
 
                 } else {
-                    do {
-                        position = computer.generateComputerMove();
-                    } while (board.isPointOccupied(position));
-                    board.setFigureToPosition(computer.getComputerFigure(), position);
+                    board.setFigureToPosition(computer.getComputerFigure(), computer.generateComputerMove());
                 }
             }
 
@@ -122,6 +120,8 @@ public class GameLogic {
         }
     }
 
+
+
     private boolean isCurrentPlayerTurn(Board board, Player player) {
         return board.getCurrentPlayer().getClass() == player.playerFigure().getClass();
     }
@@ -132,5 +132,9 @@ public class GameLogic {
 
     private Figure getFigure(String figure) {
         return figure.equals("X") ? new Cross() : new Nought();
+    }
+
+    private Figure getOpponentFigure(String figure) {
+        return figure.equals("X") ? new Nought() : new Cross();
     }
 }

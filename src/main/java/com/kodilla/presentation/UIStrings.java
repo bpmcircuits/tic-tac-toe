@@ -24,6 +24,7 @@ public class UIStrings {
     public static String CHOOSE_RIGHT_OPTION_ONE_THREE = "Please choose the option between 1 and 3.";
     public static String WRONG_OPTION = "Wrong option!";
     public static String PRESS_ENTER = "(press enter to go back)";
+    public static String COMPUTER_LEVEL = "Computer Level - EASY(1), HARD(2)";
 
     public static String PLAYER_ONE_NAME = "Please write first player name";
     public static String PLAYER_TWO_NAME = "Please write second player name";

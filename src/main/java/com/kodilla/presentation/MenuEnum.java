@@ -56,4 +56,9 @@ public class MenuEnum {
         HUMAN,
         COMPUTER
     }
+
+    public enum ComputerLevelEnum {
+        EASY,
+        HARD
+    }
 }
